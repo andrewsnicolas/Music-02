@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zona de treinamento</title>
+    <style>
+        body{
+            font-size: 15pt;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: bold;
+        }
+        input {
+            background: linear-gradient(to right, rgb(143, 255, 133), rgb(0, 255, 0) );
+            color: white;
+            font-size: 14pt;
+            width: 200px;
+            height: 50px;
+            font-weight: 400;
+            border-radius: 15px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            border-width: 0px;
+            box-shadow: 0px 0px 20px 7px rgb(211, 255, 211);
+            transition: background 5s;
+        } input:hover, input:focus{
+            background: linear-gradient(to right, rgb(152, 255, 216), rgb(0, 255, 149));
+            cursor: pointer;
+        } input:active{
+            background: linear-gradient(to right, rgb(91, 168, 139), rgb(0, 145, 84));
+            transform: translateY(5px);
+        }#clave {
+            font-size: 300px;
+            height: 400px;
+            animation: flutuar 5s infinite ease-out;
+            text-shadow: 0px 0px 20px rgb(37, 37, 37);
+            width: 170px;
+            text-align: center;
+            float: right;
+        }
+        #janela{
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.452);
+            top: 0px;
+            left: 0px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        } #janela.abrirl{
+            display: flex;
+        }
+        #conteudo-janela{
+            width: 60%;
+            min-width: 450px;
+            min-height: 200px;
+            background: rgb(255, 255, 255);
+            backdrop-filter: blur(30px);
+            padding: 50px;
+            border-radius: 20px;
+            font-size: 20pt;
+            text-shadow: none;
+            color: black;
+            box-shadow: 0px 0px 10px 7px rgba(0, 0, 0, 0.637);
+        }
+        #fechar-janela{
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 30px;
+            height: 30px;
+            border-style: none;
+            background: red;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .abrirl #conteudo-janela{
+            animation: abrirjanela 0.5s;
+        } #contagem {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 120px;
+            color: green;
+            display: none;
+            cursor: wait;
+        }
+        #titulo-janela.suma{display: none;}
+        #descrição-janela.suma{display: none;}
+        #contagem.suma{display: flex;}
+        #entrada.suma{display: inline;}
+        #enviar.suma{display: inline;}
+        #novamente.suma{display: inline;}
+        #entrada {
+            width: 200px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.651);
+            box-shadow: none;
+            color: black;
+            font-weight: bold;
+            cursor: text;
+            display:none;
+            box-shadow: 0px 0px 0px 2px black;
+        }        
+        #enviar {
+            display:none;
+            cursor: pointer;
+            background: rgba(159, 255, 150, 0.651);
+            color: rgba(0, 0, 0, 0.637);
+            box-shadow: none;
+            font-weight: bold;
+        }
+        
+        #enviar:hover{background: rgba(71, 255, 55, 0.651);}
+        #enviar:active{
+            transform: translateY(5px);
+            background: rgba(22, 119, 13, 0.651);
+            color: rgba(0, 0, 0, 0.719);
+        }
+        #novamente{
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.637);
+            box-shadow: none;
+            width: 200px;
+            height: 50px;
+            background: rgba(59, 177, 141, 0.651);
+            display: none;
+        }
+        #novamente:active{
+            transform: translateY(5px);
+            background: rgba(10, 77, 57, 0.651);
+            color: rgba(0, 0, 0, 0.719);
+        }
+        @keyframes flutuar {
+	        0% {transform: translateY(0);}
+	        50% {transform: translateY(-30px);}
+	        100% {transform: translateY(0);}
+        }
+        @keyframes abrirjanela{
+            from {
+                opacity: 0;
+                transform: translate3d(0px, -20px, -5px);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0px,0px,0px);
+            }
+        }
+        @media(max-width:450px){ 
+            /*Coisas para fazer no css:
+            -ajustar o tamanho das fontes e dos elementos da janela de conteúdo
+            -aumentar de uma forma que ao mesmo tempo que caiba fique bem ajustado
+            ao ponto de estar bem visível a todos os usuários
+            -implementar fontes e cores diferentes para os usuários de celular */
+            #janela{ width: 450px; height: 150vh;}
+            #conteudo-janela{ 
+                min-width: 300px;
+                padding: 10px;
+                font-size: 12pt;
+            }
+            #entrada{width: 100px; height: 30px; font-size: 7pt;}
+            #enviar{width: 100px; height: 30px; font-size: 6.5pt;}
+            #novamente{width: 100px; height: 30px; font-size: 6.5pt;}
+            input{margin: 10px;}
+        } 
+    </style>
+</head>
+<body>
+
+
+        <div id="janela">
+            <div id="conteudo-janela"> <button id="fechar-janela">X</button>
+                <h1 id="titulo-janela"></h1> 
+                <h1 id="contagem">3</h1>
+                <p id="descrição-janela"></p>
+                <input type="text" id="entrada"> <input type="button" id="enviar" value="enviar">
+                <input type="button" id="novamente" value="ir novamente">
+            </div>
+        </div>
+        <div id="clave">𝄞</div>
+        <h1>Bem vindo músico! <br> Oque você quer<br> aprender hoje?</h1> <br>        
+
+        <input onclick = "abrir(1)" type="button" value="Escalas maiores" id="esc_mai">
+        <input onclick = "abrir(2)" type="button" value="Escalas menores" id="esc_men"> <br> <br>
+
+        <input onclick = "abrir(3)" type="button" value="Traste" id="trast">
+
+        <input onclick = "abrir(4)" type="button" value="Notas" id="no"> <br> <br>
+
+        <input onclick = "abrir(5)" type="button" value="Conversão maior" id="conv_mai">
+        <!-- Converter um tom para outro -->
+        <input onclick = "abrir(6)" type="button" value="Conversão menor" id="conv_men"> <br> <br>
+
+        <p>&copy; Nícolas Lindão</p>
+
+
+        <script>
+
+            //área de declaração de constantes e váriaveis essenciais
+            const ema = document.getElementById('esc_mai');
+            const eme = document.getElementById('esc_men');
+            const tra = document.getElementById('tra');
+            const not = document.getElementById('no');
+            const cma = document.getElementById('conv_mai');
+            const cme = document.getElementById('conv_men');
+            const acd = document.getElementById('aci');
+            const cop = document.getElementById('comp');
+            const desc = document.getElementById('descrição-janela');
+            const titu = document.getElementById('titulo-janela');
+            const cont = document.getElementById('contagem');
+            const entr = document.getElementById('entrada');
+            const envi = document.getElementById('enviar');
+            const nova = document.getElementById('novamente')
+            var decisão = 0;
+            tempo = 0;
+            
+            //função que abre a janela modal
+            function abrir(funcao) {
+                var c = 4;
+                cont.innerHTML = "";
+                cont.classList.add('suma')
+                const janela = document.getElementById('janela');
+                janela.classList.add('abrirl');
+                const conte = setInterval(()=>{
+                    c--;
+                    if(c < 1) {
+                        entr.value = "";
+                        cont.classList.remove('suma');
+                        titu.classList.remove('suma')
+                        desc.classList.remove('suma')
+                        entr.classList.add('suma')
+                        envi.classList.add('suma')
+                        nova.classList.remove('suma')
+                        switch (funcao){
+                            case 1 : Escala_Maior(1); break
+                            case 2 : Escala_Maior(2); break
+                            case 3 : Traste(); break
+                            case 4 : Nota(); break
+                            case 5 : Convertion(1); break
+                            case 6 : Convertion(2); break
+                        }
+
+                        //faz a contagem e muda a cor do número de acordo q o tempo passa
+                        clearInterval(conte); }
+                    switch(c){
+                        case 3: cont.style.color = "green"; break
+                        case 2: cont.style.color = "yellow"; break
+                        case 1: cont.style.color = "orange"; break
+                        case 0: cont.style.color = "red"; break
+                    }
+                    cont.innerHTML = c; }, 1000)
+
+                janela.addEventListener('click', (e) => {
+                    if (e.target.id == "fechar-janela") {
+                        janela.classList.remove('abrirl')
+                        titu.classList.add('suma')
+                        desc.classList.add('suma')
+                        entr.classList.remove('suma')
+                        envi.classList.remove('suma')
+                        nova.classList.remove('suma')
+                    }})}
+
+
+            function Escala_Maior(menor){
+                titu.innerHTML = `Escala ${menor == 2? "menor":"maior"}`;
+                /* Para gerar um número aleatório inteiro,
+                é preciso, usar a propriedade "Math.floor" para arredondar
+                o valor quebrado, usar o "Math.random" que gerara um valor
+                aleatório entre 0 e 1 (esses valores saem mega quebrados), 
+                e multiplicar entre parentes o maior valor que vc quer que 
+                seja no número aleatório + 1, em seguida, menos o menor número
+                ao fechar o parenteses, some com o menor valor/número */
+                grau = Math.floor(Math.random() * (8 - 2) + 2);
+                escala = Math.floor(Math.random() * (12 - 1) + 1);
+                convertido = conversão(escala);
+                if (tempo > 0) tempo = 0;
+                start_time = setInterval(() => {tempo++}, 1000);
+                desc.innerHTML = `Na escala ${menor == 2? "menor":"maior"} de ${convertido}, qual é a nota do ${grau}° grau?`;
+                if (menor == 2) decisão = 2;
+                else decisão = 1;
+            }
+            function Traste(){
+                titu.innerHTML = "Trastes";
+                casa = Math.floor(Math.random() * (22 - 0) + 0)
+                cordas = Math.floor(Math.random() * (7 - 1) + 1)
+                if (tempo > 0) tempo = 0;
+                start_time = setInterval(() => {tempo++}, 1000)
+                desc.innerHTML = `A partir da ${cordas}° corda. Qual é a nota da ${casa}° casa?`;
+                decisão = 3;
+            }
+            function Nota(){
+                titu.innerHTML = "Notas";
+                nota_qual = Math.floor(Math.random() * (12 - 1) + 1)
+                tons_subir = Math.floor(Math.random() * (17 - 1) + 1)
+                backup = nota_qual;
+                nota_qual = conversão(nota_qual);
+                if (tempo > 0) tempo = 0;
+                start_time = setInterval(() => {tempo++}, 1000)
+                desc.innerHTML = `A partir da nota ${nota_qual}. Suba <sup>${tons_subir}/2</sup> semitons. Qual nota será?`;
+                decisão = 4; }
+
+            function Convertion(manor){
+                titu.innerHTML = `Conversão ${manor == 1? "maior":"menor"}`;
+                if(manor == 1) se = "Ma";
+                else se = "Me";
+                tom_ini = Math.floor(Math.random() * (12 - 1) + 1);
+                tom_fin = Math.floor(Math.random() * (12 - 1) + 1);
+                val_con_ini = conversão(tom_ini);
+                val_con_fin = conversão(tom_fin);
+                grau_ini = Math.floor(Math.random() * (7 - 1) + 1);
+                grau_con_ini = conversão(verificar(tom_ini, grau_ini, se));
+                if (tempo > 0) tempo = 0;
+                start_time = setInterval(() => {tempo++}, 1000);
+                desc.innerHTML = `Converta a nota ${grau_con_ini} do tom de ${val_con_ini} para o tom de ${val_con_fin}`;
+                if(manor == 1) decisão = 5; else decisão = 6; }
+                
+
+            envi.addEventListener('click', ()=>{
+                    clearInterval(start_time);
+                    var tempin = tempo;
+                    resposta = entr.value;
+                    var auxiliar = converter_bemol(resposta);
+                    var n3 = 0;
+                    entr.classList.remove('suma');
+                    envi.classList.remove('suma');
+                    switch(decisão){
+                        case 1:
+                        resultado = verificar(escala, grau, "Ma"); // fazer a conta
+                        resultado = conversão(resultado); // transformar em texto
+                        break;
+                        case 2:
+                        resultado = verificar(escala, grau, "Me"); // fazer a conta
+                        resultado = conversão(resultado); // transformar em texto
+                        break;
+                        case 3:
+                        resultado = corda(cordas, casa);
+                        break;
+                        case 4:
+                        resultado = conversão(tons_subir+backup);
+                        break;
+                        case 5: 
+                        resultado = verificar(tom_fin, grau_ini, "Ma");
+                        resultado = conversão(resultado);
+                        break;
+                        case 6: 
+                        resultado = verificar(tom_fin, grau_ini, "Me")
+                        resultado = conversão(resultado);
+                        break;
+                    }
+                    responder(resposta, resultado, tempin, auxiliar);
+                })
+            function responder(resp, resu, temp, auxi){
+                titu.innerHTML = `${auxi == resu?"Parabéns":"Tente uma outra vez" } músico!`;
+                desc.innerHTML = `Sua resposta está: ${auxi == resu?"correta":"errada"}<br> seu tempo de resposta: ${temp} segundos<br>
+                Sua resposta: ${resp} <br> Resposta certa: ${resu}`;
+                nova.classList.add('suma');
+            }
+            nova.addEventListener('click', ()=>{
+                entr.classList.add('suma');
+                envi.classList.add('suma');
+                nova.classList.remove('suma');
+                clearInterval(start_time)
+                switch(decisão){
+                    case 1: Escala_Maior(1); break;
+                    case 2: Escala_Maior(2); break;
+                    case 3: Traste(); break;
+                    case 4: Nota(); break;
+                    case 5 : Convertion(1); break;
+                    case 6 : Convertion(2); break;
+                }
+            })
+            function verificar(v1, v2, v3) {
+                var soma = 0;
+                    switch(v1){
+                        case 1: soma += 1; break; //"C"
+                        case 2: soma += 2; break; //"C#"
+                        case 3: soma += 3; break; //"D"
+                        case 4: soma += 4; break; //"D#"
+                        case 5: soma += 5; break; //"E"
+                        case 6: soma += 6; break; //"F"
+                        case 7: soma += 7; break; //"F#"
+                        case 8: soma += 8; break; //"G"
+                        case 9: soma += 9; break; //"G#"
+                        case 10: soma += 10; break; //"A"
+                        case 11: soma += 11; break; //"A#"
+                        case 12: soma += 12; break; //"B"
+                    }
+                    //maior
+                    if(v3 == "Ma"){
+                    for (var n1 = 2; n1 <= 7; n1++) {if (n1 <= v2 & n1 != 4) soma += 2;}
+                    if (v2 >= 4) soma += 1;
+                    }
+                    //menor
+                    else if (v3 == "Me"){
+                    for (var n2 = 2; n2 <= 7; n2++){if (n2 <= v2 & n2 != 3 & n2 != 6) soma += 2;}
+                        if (v2 >= 3) soma += 1;
+                        if (v2 >= 6) soma += 1;
+                    }
+                    return soma;
+                }
+            
+                function conversão(c1)
+                {
+                    var nota = "";
+                    if (c1 == 1 || c1 == 13 || c1 == 25 ) nota = "C"; //"C"
+                    else if (c1 == 2 || c1 == 14 || c1 == 26)  nota = "C#"; //"C#" 
+                    else if (c1 == 3 || c1 == 15 || c1 == 27)  nota = "D"; //"D"
+                    else if (c1 == 4 || c1 == 16 || c1 == 28)  nota = "D#"; //"D#"
+                    else if (c1 == 5 || c1 == 17 || c1 == 29)  nota = "E"; //"E"
+                    else if (c1 == 6 || c1 == 18 || c1 == 30)  nota = "F"; //"F"
+                    else if (c1 == 7 || c1 == 19 || c1 == 31)  nota = "F#"; //"F#"
+                    else if (c1 == 8 || c1 == 20 || c1 == 32)  nota = "G"; //"G"
+                    else if (c1 == 9 || c1 == 21 || c1 == 33)  nota = "G#"; //"G#"
+                    else if (c1 == 10 || c1 == 22 || c1 == 34) nota = "A"; //"A"
+                    else if (c1 == 11 || c1 == 23 || c1 == 35) nota = "A#"; //"A#"
+                    else if (c1 == 12 || c1 == 24 || c1 == 36) nota = "B"; //"B"
+                    return nota;
+                }
+                function corda(s1=1, s2=0){
+                    var notaCasa = "";
+                    var valor = s2;
+                    switch (s1){
+                        case 1: valor += 5; notaCasa = conversão(valor); break
+                        case 2: valor += 12; notaCasa = conversão(valor); break
+                        case 3: valor += 8; notaCasa = conversão(valor); break
+                        case 4: valor += 3; notaCasa = conversão(valor); break
+                        case 5: valor += 10; notaCasa = conversão(valor); break
+                        case 6: valor += 3; notaCasa = conversão(valor); break
+                    }
+                    return notaCasa
+                }
+                function conversão_inversa(m1)
+                {
+                    var n4 = 0;
+                    switch(m1){
+                        case "C" : n4 = 1; break;
+                        case "D" : n4 = 2; break;
+                        case "E" : n4 = 3; break;
+                        case "F" : n4 = 4; break;
+                        case "G" : n4 = 5; break;
+                        case "A" : n4 = 6; break;
+                        case "B" : n4 = 7; break;
+                    } return n4;
+                }
+                function conversão_exata(m2)
+                {
+                    var t1;
+                    switch(m2){
+                        case 0: t1 = "B"; break;
+                        case 1: t1 = "C"; break;
+                        case 2: t1 = "D"; break;
+                        case 3: t1 = "E"; break;
+                        case 4: t1 = "F"; break;
+                        case 5: t1 = "G"; break;
+                        case 6: t1 = "A"; break;
+                        case 7: t1 = "B"; break;
+                    } return t1;
+                }
+                function converter_bemol(p1)
+                {
+                    var backup1;
+                    var n5;
+                    if (p1.indexOf("#") > -1) return p1;
+                    else if (p1.indexOf("b") > -1){
+                        backup1 = p1.replace('b','');
+                        n5 = conversão_inversa(backup1);
+                        n5--;
+                        backup1 = conversão_exata(n5);
+                        return (backup1+"#")
+                    } else return p1;
+                }
+        </script>
+</body>
+</html>
