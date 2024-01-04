@@ -1,0 +1,164 @@
+
+body{
+    font-size: 15pt;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+input {
+    background: linear-gradient(to right, rgb(143, 255, 133), rgb(0, 255, 0) );
+    color: white;
+    font-size: 14pt;
+    width: 200px;
+    height: 50px;
+    font-weight: 400;
+    border-radius: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-width: 0px;
+    box-shadow: 0px 0px 20px 7px rgb(211, 255, 211);
+    transition: background 5s;
+} input:hover, input:focus{
+    background: linear-gradient(to right, rgb(152, 255, 216), rgb(0, 255, 149));
+    cursor: pointer;
+} input:active{
+    background: linear-gradient(to right, rgb(91, 168, 139), rgb(0, 145, 84));
+    transform: translateY(5px);
+}#clave {
+    font-size: 300px;
+    height: 400px;
+    animation: flutuar 5s infinite ease-out;
+    text-shadow: 0px 0px 20px rgb(37, 37, 37);
+    width: 170px;
+    text-align: center;
+    float: right;
+}
+#janela{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.452);
+    top: 0px;
+    left: 0px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+} #janela.abrirl{
+    display: flex;
+}
+#conteudo-janela{
+    width: 60%;
+    min-width: 450px;
+    min-height: 200px;
+    background: rgb(255, 255, 255);
+    backdrop-filter: blur(30px);
+    padding: 50px;
+    border-radius: 20px;
+    font-size: 20pt;
+    text-shadow: none;
+    color: black;
+    box-shadow: 0px 0px 10px 7px rgba(0, 0, 0, 0.637);
+}
+#fechar-janela{
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 30px;
+    height: 30px;
+    border-style: none;
+    background: red;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.abrirl #conteudo-janela{
+    animation: abrirjanela 0.5s;
+} #contagem {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 120px;
+    color: green;
+    display: none;
+    cursor: wait;
+}
+#titulo-janela.suma{display: none;}
+#descrição-janela.suma{display: none;}
+#contagem.suma{display: flex;}
+#entrada.suma{display: inline;}
+#enviar.suma{display: inline;}
+#novamente.suma{display: inline;}
+#entrada {
+    width: 200px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.651);
+    box-shadow: none;
+    color: black;
+    font-weight: bold;
+    cursor: text;
+    display:none;
+    box-shadow: 0px 0px 0px 2px black;
+}        
+#enviar {
+    display:none;
+    cursor: pointer;
+    background: rgba(159, 255, 150, 0.651);
+    color: rgba(0, 0, 0, 0.637);
+    box-shadow: none;
+    font-weight: bold;
+}
+
+#enviar:hover{background: rgba(71, 255, 55, 0.651);}
+#enviar:active{
+    transform: translateY(5px);
+    background: rgba(22, 119, 13, 0.651);
+    color: rgba(0, 0, 0, 0.719);
+}
+#novamente{
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.637);
+    box-shadow: none;
+    width: 200px;
+    height: 50px;
+    background: rgba(59, 177, 141, 0.651);
+    display: none;
+}
+#novamente:active{
+    transform: translateY(5px);
+    background: rgba(10, 77, 57, 0.651);
+    color: rgba(0, 0, 0, 0.719);
+}
+@keyframes flutuar {
+    0% {transform: translateY(0);}
+    50% {transform: translateY(-30px);}
+    100% {transform: translateY(0);}
+}
+@keyframes abrirjanela{
+    from {
+        opacity: 0;
+        transform: translate3d(0px, -20px, -5px);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0px,0px,0px);
+    }
+}
+@media(max-width:450px){ 
+    /*Coisas para fazer no css:
+    -ajustar o tamanho das fontes e dos elementos da janela de conteúdo
+    -aumentar de uma forma que ao mesmo tempo que caiba fique bem ajustado
+    ao ponto de estar bem visível a todos os usuários
+    -implementar fontes e cores diferentes para os usuários de celular */
+    #janela{ width: 450px; height: 150vh;}
+    #conteudo-janela{ 
+        min-width: 300px;
+        padding: 10px;
+        font-size: 12pt;
+    }
+    #entrada{width: 100px; height: 30px; font-size: 7pt;}
+    #enviar{width: 100px; height: 30px; font-size: 6.5pt;}
+    #novamente{width: 100px; height: 30px; font-size: 6.5pt;}
+    input{margin: 10px;}
+} 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zona de treinamento</title>
+    <link rel="stylesheet" href="music3.css">
+</head>
+<body>
+        <div id="janela">
+            <div id="conteudo-janela"> <button id="fechar-janela">X</button>
+                <h1 id="titulo-janela"></h1> 
+                <h1 id="contagem">3</h1>
+                <p id="descrição-janela"></p>
+                <input type="text" id="entrada"> <input type="button" id="enviar" value="enviar">
+                <input type="button" id="novamente" value="ir novamente">
+            </div>
+        </div>
+        <div id="clave">𝄞</div>
+        <h1>Bem vindo músico! <br> Oque você quer<br> aprender hoje?</h1> <br>
+        <input onclick = "abrir(1)" type="button" value="Escalas maiores" id="esc_mai">
+        <input onclick = "abrir(2)" type="button" value="Escalas menores" id="esc_men"> <br> <br>
+        <input onclick = "abrir(3)" type="button" value="Traste" id="trast">
+        <input onclick = "abrir(4)" type="button" value="Notas" id="no"> <br> <br>
+        <input onclick = "abrir(5)" type="button" value="Conversão maior" id="conv_mai">
+        <!-- Converter um tom para outro -->
+        <input onclick = "abrir(6)" type="button" value="Conversão menor" id="conv_men"> <br> <br>
+        <p>&copy; Nícolas Lindão</p>
+        <script src="music1.js">
+        </script>
+</body>
+</html>
