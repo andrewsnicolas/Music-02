@@ -16,7 +16,6 @@
             const nova = document.getElementById('novamente')
             var decisão = 0;
             tempo = 0;
-            
             //função que abre a janela modal
             function abrir(funcao) {
                 var c = 4;
@@ -76,6 +75,21 @@
                 grau = Math.floor(Math.random() * (8 - 2) + 2);
                 escala = Math.floor(Math.random() * (12 - 1) + 1);
                 convertido = conversão(escala);
+                /*if(convertido != "E" || convertido != "B"){
+                    var snb = Math.floor(Math.random() * (4 - 1) + 1) 
+                    // ela decidirá se irá ser sustenido, natural ou bemol a nota
+                    switch(snb){
+                        case 1:
+                        convertido += "#"
+                        break;
+                        case 3:
+                        convertido +="b"
+                        break;
+                    }
+                }
+                if(convertido.indexOf("#") > -1 || convertido != 'F'){
+                    
+                }*/
                 if (tempo > 0) tempo = 0;
                 start_time = setInterval(() => {tempo++}, 1000);
                 desc.innerHTML = `Na escala ${menor == 2? "menor":"maior"} de ${convertido}, qual é a nota do ${grau}° grau?`;
@@ -122,10 +136,16 @@
                     clearInterval(start_time);
                     var tempin = tempo;
                     resposta = entr.value;
-                    var auxiliar = converter_bemol(resposta);
-                    var n3 = 0;
+
+                    /*Caso, a lição não seja escalas maiores ou escalas menores,
+                    o cliente não terá o "tanto faz" de ser bemol ou sustenido,
+                    pois, fará sim diferença. */
+                    if(decisão > 2) var auxiliar = converter_bemol(resposta);
+                    else var auxiliar = resposta;
+
                     entr.classList.remove('suma');
                     envi.classList.remove('suma');
+                    
                     switch(decisão){
                         case 1:
                         resultado = verificar(escala, grau, "Ma"); // fazer a conta
@@ -153,9 +173,10 @@
                     responder(resposta, resultado, tempin, auxiliar);
                 })
             function responder(resp, resu, temp, auxi){
-                titu.innerHTML = `${auxi == resu?"Parabéns":"Tente uma outra vez" } músico!`;
+                titu.innerHTML = `${auxi == resu?"Parabéns":"Tente uma outra vez" }!`;
                 desc.innerHTML = `Sua resposta está: ${auxi == resu?"correta":"errada"}<br> seu tempo de resposta: ${temp} segundos<br>
                 Sua resposta: ${resp} <br> Resposta certa: ${resu}`;
+                entr.value = ""
                 nova.classList.add('suma');
             }
             nova.addEventListener('click', ()=>{

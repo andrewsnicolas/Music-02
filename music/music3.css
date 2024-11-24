@@ -70,6 +70,19 @@ input {
     font-size: 20px;
     cursor: pointer;
     border-radius: 50%;
+    transition: 0.5s;
+}
+#fechar-janela:hover{
+    width:50px;
+    height:50px;
+    top: -15px;
+    right: -15px;
+    font-size: 25px;
+    transition:1s;
+}
+#fechar-janela:active{
+    background: rgb(173, 0, 0);
+    color: rgb(173, 173, 173);
 }
 .abrirl #conteudo-janela{
     animation: abrirjanela 0.5s;
